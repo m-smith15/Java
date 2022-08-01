@@ -8,7 +8,7 @@ public class CafeJava {
         String displayTotalMessage = "Your total is $";
         
         // Menu variables (add yours below)
-        double mochaPrice = 3.5;
+        //double mochaPrice = 3.5;
         double dripCoffeePrice = 4.0;
         double lattePrice = 5.5;
         double cappuccinoPrice = 6.0;
