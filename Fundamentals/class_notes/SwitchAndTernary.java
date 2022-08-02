@@ -1,4 +1,4 @@
-
+package class_notes;
 public class SwitchAndTernary {
     public static void main( String args [] ) {
 
