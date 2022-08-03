@@ -19,7 +19,8 @@ public class TestCafe {
         System.out.printf("Purchases needed by week " +numWeeks+ ": %s \n\n", cafeBusinessLogic.getStreakGoal(numWeeks));
     
         System.out.println("----- Order Total Test-----");
-        double[] lineItems = {3.5, 1.5, 4.0, 4.5};
+        //the array here is double[] which is primitve time. To get "size()" you have to use length b/c not a wrapper class
+        double[] lineItems = {3.5, 1.5, 4.0, 4.5, 5.5};
         //ArrayList<Double> totalPrice = (double) lineItems;
         System.out.printf("Order total: %s \n\n",cafeBusinessLogic.getOrderTotal(lineItems));
         

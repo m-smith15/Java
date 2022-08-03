@@ -15,7 +15,7 @@ public class CafeUtil {
     
         public String getOrderTotal(double[] totalPrice){
             double sumTotal = 0;
-            for ( int i = 0; i < 4; i++ ){
+            for ( int i = 0; i < totalPrice.length; i++ ){
                 sumTotal += totalPrice[i];
             }
             // ArrayList<Double> newArray = new ArrayList<Double>();
