@@ -20,5 +20,6 @@ public class PuzzlingTest {
 
         ArrayList<String> passwordSet = generator.getNewPasswordSet(5);
         System.out.println(passwordSet);
-	}
+    }
+    
 }

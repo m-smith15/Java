@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class TestBarista {
 
     public static void main(String[] args) {
@@ -43,7 +40,6 @@ public class TestBarista {
         nameOrder3.setReady(false);
         System.out.println(nameOrder3.getStatusMessage());
         nameOrder3.display();
-
 
         //testing/debugging
         // Item itemExample = new Item("Mocha", 12.0);

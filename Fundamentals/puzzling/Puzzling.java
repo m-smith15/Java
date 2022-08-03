@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Puzzling {
     
+
     public static ArrayList<Integer> getTenRolls(){
         ArrayList<Integer> randoRoll = new ArrayList<Integer>();
         for(int i = 0; i < 10; i++){
@@ -57,3 +58,4 @@ public class Puzzling {
         return resultsArray;
     }
 }
+
