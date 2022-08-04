@@ -98,4 +98,3 @@ public class BankAccount {
         return total;
     }
 }
-
