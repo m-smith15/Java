@@ -89,6 +89,61 @@ class SinglyLinkedList {
         }
         this.insertAtBackRecursive(data, runner.next);
     }
+
+    removeFromBack() {
+        if ( this.isEmpty() ){
+            return "SLL is Empty!";
+        } else {
+            let runner = this.head;
+            while( runner.next ){
+                let nxtElement = runner.next
+                if (nxtElement.next == null){
+                    runner.next = null;
+                    break;
+                }
+                runner = runner.next;
+            }
+        }
+        return;
+    }
+
+    contains(val) {
+        if ( this.isEmpty() ){
+            return "SLL is Empty!";
+        } else {
+            let runner = this.head;
+            while( runner.next ){
+                if(runner.data == val){
+                    return true;
+                }
+                runner = runner.next;
+            }
+            return false;
+        }
+    }
+        //array [1,2,3,4,5] | val = 2
+    containsRecursive(val, current = this.head) {
+        if(current == null){ //edge case 0 in SLL
+            return false;
+        }
+        if(current.data == val){
+            return true;
+        }
+        return this.containsRecursive(val, current.next);
+    }
+
+        // insertAtBackRecursive(data, runner = this.head) {
+        //     if(runner == null){
+        //         runner = new ListNode(data);
+        //         return runner;
+        //     }
+        //     else if(runner.next == null){
+        //         runner.next = new ListNode(data)
+        //         return runner.next;
+        //     }
+        //     this.insertAtBackRecursive(data, runner.next);
+        // }
+    //}
 }
 
 let list1 = new SinglyLinkedList();
@@ -115,7 +170,17 @@ console.log("-------------------")
 // list1.display();
 
 list1.seedFromArray([1,2,3,4,5]);
+// list1.display();
+
+//list1.toArr();
+list1.display();
+console.log("remove from back changes ------------")
+list1.removeFromBack();
 list1.display();
 
-list1.toArr();
-list1.display();
+console.log("contains -=-------------")
+// console.log(list1.contains(2));
+// console.log(list1.contains(15));
+
+console.log("contains recursive -------");
+console.log(list1.containsRecursive(12));
