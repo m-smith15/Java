@@ -131,19 +131,6 @@ class SinglyLinkedList {
         }
         return this.containsRecursive(val, current.next);
     }
-
-        // insertAtBackRecursive(data, runner = this.head) {
-        //     if(runner == null){
-        //         runner = new ListNode(data);
-        //         return runner;
-        //     }
-        //     else if(runner.next == null){
-        //         runner.next = new ListNode(data)
-        //         return runner.next;
-        //     }
-        //     this.insertAtBackRecursive(data, runner.next);
-        // }
-    //}
 }
 
 let list1 = new SinglyLinkedList();
@@ -178,9 +165,9 @@ console.log("remove from back changes ------------")
 list1.removeFromBack();
 list1.display();
 
-console.log("contains -=-------------")
-// console.log(list1.contains(2));
-// console.log(list1.contains(15));
+console.log("contains ---------------")
+console.log(list1.contains(2));
+console.log(list1.contains(15));
 
 console.log("contains recursive -------");
 console.log(list1.containsRecursive(12));
