@@ -8,5 +8,6 @@ function min(arr, toReturn) {
 }
 min([1,2,3,4,5], 'value') // => 1
 min([1,2,3,4,5], 'index') // => 0
+// additional testing
 min([5,4,3,4,5], 'value') // => 3
 min([5,4,3,4,5], 'index') // => 2
