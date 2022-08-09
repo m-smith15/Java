@@ -155,9 +155,8 @@ class SinglyLinkedList {
         } else {
             let runner = this.head;
             while( runner.next ){
-                let nxtElement = runner.next;
-                if(nxtElement.data == val){
-                    runner.next = nxtElement.next;
+                if(runner.next.data == val){
+                    runner.next = runner.next.next;
                     return true;
                 }
                 runner = runner.next;
@@ -200,9 +199,9 @@ list1.seedFromArray([1,2,3,4,5]);
 // list1.removeFromBack();
 // list1.display();
 
-console.log("contains ---------------")
-console.log(list1.contains(2));
-console.log(list1.contains(15));
+// console.log("contains ---------------")
+// console.log(list1.contains(2));
+// console.log(list1.contains(15));
 
 // console.log("contains recursive -------");
 // console.log(list1.containsRecursive(12));
@@ -211,6 +210,6 @@ console.log(" 2nd to last -----------");
 list1.secondToLast();
 list1.display();
 
-console.log("remove val -----------------")
+console.log("remove val -----------");
 list1.removeVal(3);
 list1.display();
