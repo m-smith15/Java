@@ -1,6 +1,7 @@
 package com.shrimpco.books.mvc.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,4 +34,13 @@ public class BooksController {
 		return "index.jsp";
 	}
 	
+	    
+	 	@RequestMapping("/books")
+	    public String index(Model model) {
+	        List<Book> books = bookService.allBooks();
+	        model.addAttribute("books", books);
+	        return "allbooks.jsp";
+	    }
 }
+	
+
