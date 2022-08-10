@@ -163,6 +163,124 @@ class SinglyLinkedList {
             return false;
         }
     }
+
+    prepend(value, target){
+        let newNode = new ListNode(value)
+        if(this.isEmpty()){
+            return false;
+        }
+        else if(this.head.data == target){
+            newNode.next = this.head;
+            this.head = newNode;
+            return true;
+        }
+        let runner = this.head;
+        while(runner.next != null){
+            if(runner.next.data == target){
+                newNode.next = runner.next;
+                runner.next = newNode;
+                return true;
+            }
+            runner = runner.next;
+        }
+        return false;
+    }
+
+    moveMinToFront(){
+        if(this.isEmpty() || this.head.next == null){
+        return this;
+        }
+        let minNodePrev = this.head;
+        let runner = this.head;
+        while(runner.next != null){
+        if(minNodePrev.next.data > runner.next.data){
+            minNodePrev = runner;
+        }
+        runner = runner.next;
+        }
+        let minNode = new ListNode(minNodePrev.next.data);
+        minNode.next = this.head; 
+        this.head = minNode;
+        minNodePrev.next = minNodePrev.next.next;
+        return this
+    }
+
+    concat(addList){ //add lists nodes to exsiting list. So if you have SLL 1, 2, 3 and you call this with SLL 4 5 6 result = 1 2 3 4 5 6
+        //console.log(addList);
+        //console.log(addList.head);
+        if ( this.isEmpty() ){
+            return "SLL is Empty!";
+        } else {
+            let endNode = this.head; //endNode = first list
+            let runner = addList.head //runner = second list (6 in list 2)
+            while( endNode.next ){
+                if(endNode.next != null){
+                    endNode = endNode.next;
+                }
+            }
+            if (runner.next == null){ //runner.next == null means end of list
+                endNode.next = null;
+                //endNode = endNode.next;
+                
+            }
+            else{
+                endNode.next = runner
+            }
+            return;
+        }
+    }
+
+    splitOnVal(val){ //move to value in list and split into 2 lists. Split on 3 list 1 2 3 4 5 > 1 2 and 3 4 5
+        if ( this.isEmpty() ){ //contains
+            return "SLL is Empty!";
+        } else {
+            let runner = this.head;
+            let lag = null;
+            while( runner.next ){
+                if(runner.data == val){
+                    let newArr = [];//split here
+                    let list2Runner = runner;
+                    while (list2Runner) {
+                        newArr.push(list2Runner.data);
+                        list2Runner = list2Runner.next;
+                        //console.log(newArr)
+                    }
+                    lag.next = null;
+                    let list2 = new SinglyLinkedList(); //creating & display list2
+                    list2.seedFromArray(newArr);
+                    list2.display();
+                }
+                lag = runner;
+                //console.log(lag)
+                runner = runner.next;
+            }
+            return
+        }
+    }
+
+    recursiveMax(runner = this.head, maxNode = this.head){ //maxNode set as greatest
+    //     if(this.isEmpty()){
+    //         return null
+    //     }
+    //     if(runner == null){ //edge case 0 in SLL
+    //         return maxNode.value;
+    //     }
+    //     if(runner.data > maxNode){
+    //         return this.recursiveMax(runner.next,runner);
+    //     }
+    //     else return this.recursiveMax(runner.next, maxNode);
+    // }
+    if(this.isEmpty()){
+        return null
+    }
+    if(runner == null){
+        return maxNode.value
+    }
+    if(maxNode.value < runner.value){
+        return this.recursiveMax(runner.next, runner)
+    }
+    else return this.recursiveMax(runner.next, maxNode)
+}
 }
 
 let list1 = new SinglyLinkedList();
@@ -184,12 +302,12 @@ let list1 = new SinglyLinkedList();
 // list1.insertAtFront("mklumpy")
 // list1.insertAtFront("dumpy")
 
-console.log("-------------------")
+// console.log("-------------------")
 
 // list1.display();
 
 list1.seedFromArray([1,2,3,4,5]);
-// list1.display();
+list1.display();
 
 //list1.toArr();
 // list1.display();
@@ -204,10 +322,24 @@ list1.seedFromArray([1,2,3,4,5]);
 // console.log("contains recursive -------");
 // console.log(list1.containsRecursive(12));
 
-console.log(" 2nd to last -----------");
-list1.secondToLast();
-list1.display();
+// console.log(" 2nd to last -----------");
+// list1.secondToLast();
+// list1.display();
 
-console.log("remove val -----------");
-list1.removeVal(3);
-list1.display();
+// console.log("remove val -----------");
+// list1.removeVal(3);
+// list1.display();
+
+// console.log("concat changes ----------------")
+// let list2 = new SinglyLinkedList();
+// list2.seedFromArray([6,7,8]);
+// list1.concat(list2);
+// list1.display();
+
+// console.log("split on val ----(list2)-----")
+// list1.splitOnVal(3);
+// console.log("list1")
+// list1.display();
+
+console.log("recursive max ------------")
+console.log(list1.recursiveMax());
