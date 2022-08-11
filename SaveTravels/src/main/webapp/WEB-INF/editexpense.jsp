@@ -15,46 +15,31 @@
     <link rel="stylesheet" href="/css/main.css"> <!-- change to match your file/naming structure -->
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <title>Just look at these Expenses</title>
+<title>Edit this here expense</title>
 </head>
 <body>
-<h1> Just look at this page render!</h1>
+<h1>${editExpense}</h1>
+<h1>${editExpense.getName()}</h1>
+<h1>${name}</h1>
 
-<table>
-	<tr>
-		<th>Expense</th>
-		<th>Vendor</th>
-		<th>Amount</th>
-		<th>Actions</th>
-	</tr>
-	<c:forEach var="expense" items="${expenses}">
-	<tr>
-		<td><c:out value="${expense.getName()}"/></td>
-		<td><c:out value="${expense.vendor}"/></td>
-		<td>$<c:out value="${expense.amount}"/></td>
-		<td><a href="/expenses/edit/${expense.id}">Edit</a></td>
-	</tr>
-	</c:forEach>
-</table>
-<hr><br>
-
-<form:form action="/create" method="post" modelAttribute="expense">
-
+<form:form action="/edit/${editExpense.id}" method="POST" modelAttribute="editExpense">
+	<input type="hidden" name="_method" value="put">
 	<form:label path="name">Expense Name:</form:label>
-		<form:input path="name" type="text"/><br>
-		<form:errors path="name"/>
+		<form:input path="name" type="text"/>
+		<form:errors path="name"/><br>
 	<form:label path="vendor">Vendor Name:</form:label>
-		<form:input path="vendor" type="text"/><br>
-		<form:errors path="vendor"/>
+		<form:input path="vendor" type="text"/>
+		<form:errors path="vendor"/><br>
 	<form:label path="amount">Amount:</form:label>
-		<form:input path="amount" type="text"/><br>
-		<form:errors path="amount"/>
+		<form:input path="amount" type="text"/>
+		<form:errors path="amount"/><br>
 	<form:label path="description">Description:</form:label>
-		<form:textarea path="description"/><br>
-		<form:errors path="description"/>
+		<form:textarea path="description"/>
+		<form:errors path="description"/><br>
 	<button type="submit">Submit</button>
 	
 </form:form>
+
 
 </body>
 </html>
