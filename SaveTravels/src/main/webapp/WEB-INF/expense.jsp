@@ -30,7 +30,7 @@
 	<tr>
 		<td><c:out value="${expense.getName()}"/></td>
 		<td><c:out value="${expense.vendor}"/></td>
-		<td>${expense.amount}</td>
+		<td>$<c:out value="${expense.amount}"/></td>
 	</tr>
 	</c:forEach>
 </table>
@@ -40,12 +40,16 @@
 
 	<form:label path="name">Expense Name:</form:label>
 		<form:input path="name" type="text"/><br>
+		<form:errors path="name"/>
 	<form:label path="vendor">Vendor Name:</form:label>
 		<form:input path="vendor" type="text"/><br>
+		<form:errors path="vendor"/>
 	<form:label path="amount">Amount:</form:label>
 		<form:input path="amount" type="text"/><br>
+		<form:errors path="amount"/>
 	<form:label path="description">Description:</form:label>
 		<form:textarea path="description"/><br>
+		<form:errors path="description"/>
 	<button type="submit">Submit</button>
 	
 </form:form>
