@@ -59,12 +59,34 @@ public class travelsController {
 	public String edit(@Valid @ModelAttribute("editExpense") Expense expense,
 						BindingResult bindingResult,
 						Model model) {
+		
 		if(bindingResult.hasErrors() ) {
 			return "editexpense.jsp";
 		} else {
-		
 		expenseService.createExpense(expense);
 		return "redirect:/";
 		}
 	}
+	
+	@RequestMapping( value = "/expenses/delete/{id}", method=RequestMethod.DELETE)
+	public String expenseDelete(@PathVariable("id") Long id) {
+		
+		expenseService.deleteExpense(id);
+		
+		return "redirect:/";
+		
+	}
+	
+	@RequestMapping(value = "/expenses/{id}")
+	public String viewExpense(@ModelAttribute("viewExpense") Expense expense, 
+						@PathVariable("id") Long id,
+						Model model) {
+		
+		expense = expenseService.findExpense(id);
+		
+		model.addAttribute("viewExpense", expense);
+		
+		return "oneexpense.jsp";
+	}
+	
 }

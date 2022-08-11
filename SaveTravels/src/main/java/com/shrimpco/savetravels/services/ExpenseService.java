@@ -34,4 +34,7 @@ public class ExpenseService {
 	         return null;
 	     }
 	 }
+	public void deleteExpense(Long id) {
+		expenseRepository.deleteById(id);
+	}
 }
