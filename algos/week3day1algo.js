@@ -18,50 +18,6 @@ class BinarySearchTree {
         else return false;
     }
 
-
-insert( newVal ){
-    let newNode = new BSTNode( newVal )
-    if( this.isEmpty() ){
-        this.root = newNode;
-        return this;
-    }
-    let runner = this.root;
-    while( runner ) {
-        if( newVal === runner.data ){
-            runner.count++;
-            return this;
-        }
-        if ( newVal > runner.data ){
-            if( runner.right ){
-                runner = runner.right;
-            } else {
-                runner.right = newNode;
-                return this;
-            }
-        } else {
-            if( runner.left ){
-                runner = runner.left;
-            } else {
-                runner.left = newNode;
-                return this;
-            }
-        }
-    }
-}
-
-min(current = this.root) { 
-    if(this.isEmpty()){
-        return null;
-    }
-    while(current){
-        if (current.left){
-            current = current.left
-        } else {
-            return current.data;
-        }
-    }
-}
-
 //Calebs display
 display(){
     if( this.isEmpty() ){
@@ -217,6 +173,87 @@ containsRecursive(searchVal, current = this.root) {
     }
 }
 
+range(){
+    return this.max()-this.min();
+}
+
+insert( newVal ){
+    let newNode = new BSTNode( newVal )
+    if( this.isEmpty() ){
+        this.root = newNode;
+        return this;
+    }
+    let runner = this.root;
+    while( runner ) {
+        if( newVal === runner.data ){
+            runner.count++;
+            return this;
+        }
+        if ( newVal > runner.data ){
+            if( runner.right ){
+                runner = runner.right;
+            } else {
+                runner.right = newNode;
+                return this;
+            }
+        } else {
+            if( runner.left ){
+                runner = runner.left;
+            } else {
+                runner.left = newNode;
+                return this;
+            }
+        }
+    }
+}
+
+insertRecursive(newVal, curr = this.root) {
+    if(this.isEmpty()){
+        this.root = new BSTNode(newVal);
+        return this;
+    } else if(newVal > current.data && !current.right){
+        current.right = new BSTNode(newVal);
+        return this;
+    } else if(newVal > current.data && current.right){
+        return this.insertRecursive(newVal,current.right);
+    } else if(newVal < current.data && !current.left){
+        current.left = new BSTNode(newVal);
+        return this;
+    } else if(newVal < current.data && current.left){
+        return this.insertRecursive(newVal,current.left)
+    }
+}
+
+removeEnd(searchVal){ //WIP
+    if(this.isEmpty()){
+        return false;
+    }
+    var runner = this.root;
+    var lagRight = null;
+    var lagLeft = null;
+    while(runner){
+        if(searchVal > runner.data && !runner.right){
+            return false;
+        } else if(searchVal > runner.data && runner.right){
+            lagLeft = runner.data;
+            lagRight = null;
+            runner = runner.right;
+        } else if(searchVal < runner.data && !runner.left){
+            return false;
+        } else if(searchVal < runner.data && runner.left){
+            lagRight = runner.data;
+            lagLeft = null;
+            runner = runner.left;
+        } else 
+            // if(lagRight != null){
+            //     lagRight.left = null
+            // }
+            // else if(lagLeft != null){
+            //     lagLeft.right = null
+            // }
+            return console.log("found value " + searchVal + " with lagLeft " + lagLeft + " and lagRight " + lagRight +" runner: " + runner.data);
+    }
+}
 
 //end
 }
@@ -229,6 +266,8 @@ tree.insert(11);
 tree.insert(13);
 tree.display();
 
-// tree.removeVal(13);
-// tree.display();
-// tree.maxRecurisve();
+//console.log(tree.range());
+//tree.maxRecurisve();
+
+tree.removeEnd(13);
+tree.display();
