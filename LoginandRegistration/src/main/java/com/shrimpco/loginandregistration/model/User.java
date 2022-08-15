@@ -23,11 +23,12 @@ public class User {
 	private Long id;
 	
 	@NotEmpty(message="Email is required!")
-	@Size(max=200)
+	@Size(min=3, max=200)
 	//How to create a rule to check against Regex...
 	private String email;
 	
 	@NotEmpty(message="Password is required!")
+	@Size(min=3, max=200)
 	private String password;
 	
     @Transient

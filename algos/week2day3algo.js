@@ -336,10 +336,10 @@ list1.display();
 // list1.concat(list2);
 // list1.display();
 
-// console.log("split on val ----(list2)-----")
-// list1.splitOnVal(3);
-// console.log("list1")
-// list1.display();
+console.log("split on val ----(list2)-----")
+list1.splitOnVal(3);
+console.log("list1")
+list1.display();
 
-console.log("recursive max ------------")
-console.log(list1.recursiveMax());
+// console.log("recursive max ------------")
+// console.log(list1.recursiveMax());

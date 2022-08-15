@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shrimpco.loginandregistration.model.User;
@@ -46,13 +45,17 @@ public class UserController {
 		//checking if db req met
 		if(bindingResult.hasErrors()) {
 			System.out.println("unsuccessful register - table req not met");
+			model.addAttribute("user", new User());
 			return "index.jsp";
 		}
+		//checking if email is an email
+		
 		//checking if email exists
 		User potentialUser = userService.singleUserByLogin(newUser.getEmail());
 		if(potentialUser != null){
 			System.out.println("unsuccessful register - email already exists");
 			bindingResult.rejectValue("email", "In Use", "The email already exists in db!");
+			model.addAttribute("user", new User());
 			return "index.jsp";
 		} else {
 			
