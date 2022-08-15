@@ -11,6 +11,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -23,8 +24,7 @@ public class User {
 	private Long id;
 	
 	@NotEmpty(message="Email is required!")
-	@Size(min=3, max=200)
-	//How to create a rule to check against Regex...
+	@Email(message="Email must be email")
 	private String email;
 	
 	@NotEmpty(message="Password is required!")

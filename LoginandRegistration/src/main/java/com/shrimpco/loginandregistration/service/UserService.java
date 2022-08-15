@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.shrimpco.loginandregistration.model.User;
 import com.shrimpco.loginandregistration.repository.UserRepository;
@@ -19,10 +20,11 @@ public class UserService {
 	
 	//create, find all, find 1, delete
 	
-	public User createUser(User user) {
+	public void createUser(User user) {
+		//when move to service move hash pw to register too
 		String hashedPassword = BCrypt.hashpw( user.getPassword(), BCrypt.gensalt() );
 		user.setPassword(hashedPassword);
-		return userRepository.save(user);
+		userRepository.save(user);
 	}
 	
 	public List<User> allUsers(){
@@ -51,4 +53,54 @@ public class UserService {
 			}
 	}
 	
+	public User registerUser(User newUser, BindingResult bindingResult) {
+		
+		//checking if pw equals confirm
+		if(!newUser.getPassword().equals(newUser.getConfirm_password())) {
+			System.out.println("unsuccessful register - password mismatch");
+			bindingResult.rejectValue("confirm_password", "Matches", "Password mismatch!");
+			return null;
+		}
+		
+		//checking if db req met
+		if(bindingResult.hasErrors()) {
+			System.out.println("unsuccessful register - table req not met");
+			return null;
+		}
+		
+		//checking if email exists
+		User potentialUser = singleUserByLogin(newUser.getEmail());
+		if(potentialUser != null){
+			System.out.println("unsuccessful register - email already exists");
+			bindingResult.rejectValue("email", "In Use", "The email already exists in db!");
+			return null;
+		} 
+		else {
+			return newUser;
+		}
+	}
+	
+	public User login(User user, BindingResult bindingResult) {
+		
+		//checking if email exists
+		User currentUser = singleUserByLogin(user.getEmail());
+		if(currentUser != null) {
+			
+			//checking pw against db
+			if(BCrypt.checkpw(user.getPassword(), currentUser.getPassword() ) ) {
+					System.out.println("successful login");
+					return currentUser;
+			}
+			else {
+				System.out.println("unsuccessful login - password");
+				bindingResult.rejectValue("password", "Incorrect", "Password not correct!");
+				return null;
+			}
+		} 
+		else {
+			System.out.println("unsuccessful login - email");
+			bindingResult.rejectValue("email", "Incorrect", "email not correct!");
+			return null;
+		}
+	}
 }

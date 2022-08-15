@@ -3,7 +3,6 @@ package com.shrimpco.loginandregistration.controller;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,37 +35,20 @@ public class UserController {
 							RedirectAttributes redirectAttribute,
 							Model model) {
 		
-		//checking confirm = password
-		if(!newUser.getPassword().equals(newUser.getConfirm_password())) {
-			System.out.println("unsuccessful register - password mismatch");
-			bindingResult.rejectValue("confirm_password", "Matches", "Password mismatch!");
-			return "index.jsp";
-		}
-		//checking if db req met
-		if(bindingResult.hasErrors()) {
-			System.out.println("unsuccessful register - table req not met");
-			model.addAttribute("user", new User());
-			return "index.jsp";
-		}
-		//checking if email is an email
-		
-		//checking if email exists
-		User potentialUser = userService.singleUserByLogin(newUser.getEmail());
-		if(potentialUser != null){
-			System.out.println("unsuccessful register - email already exists");
-			bindingResult.rejectValue("email", "In Use", "The email already exists in db!");
-			model.addAttribute("user", new User());
-			return "index.jsp";
-		} else {
-			
-			// else no errors create user and add email/id to session
-			User currentUser = userService.createUser( newUser );
+		 
+		 if(userService.registerUser(newUser, bindingResult) != null){
+			//no errors create user and add email/id to session
+			userService.createUser( newUser );
 			session.setAttribute("email", newUser.getEmail() );
 			session.setAttribute("id", newUser.getId() );
 			session.setAttribute("first_name", newUser.getFirst_name() );
 			session.setAttribute("last_name", newUser.getLast_name() );
 			return "redirect:/dashboard";
 		}
+		 else {
+			 model.addAttribute("user", new User());
+			 return "index.jsp";
+		 }
 	}
 	
 	@RequestMapping( value="/login", method=RequestMethod.POST)
@@ -75,26 +57,15 @@ public class UserController {
 						HttpSession session,
 						Model model) {
 		//if errors
-		User currentUser = userService.singleUserByLogin(user.getEmail());
-		if(currentUser != null) {
-			
-			if(BCrypt.checkpw(user.getPassword(), currentUser.getPassword() ) ) {
-					System.out.println("successful login");
-					session.setAttribute("email", currentUser.getEmail() );
-					session.setAttribute("id", currentUser.getId() );
-					session.setAttribute("first_name", currentUser.getFirst_name() );
-					session.setAttribute("last_name", currentUser.getLast_name() );
-					return "redirect:/dashboard";
-			}
-			else {
-				System.out.println("unsuccessful login - password");
-				bindingResult.rejectValue("password", "Incorrect", "Password not correct!");
-				model.addAttribute("newUser", new User());
-				return "index.jsp";
-			}
-		} else {
-			System.out.println("unsuccessful login - email");
-			bindingResult.rejectValue("email", "Incorrect", "email not correct!");
+		User potentialUser = userService.login(user, bindingResult);
+		if(potentialUser != null) {
+			session.setAttribute("email", potentialUser.getEmail() );
+			session.setAttribute("id", potentialUser.getId() );
+			session.setAttribute("first_name", potentialUser.getFirst_name() );
+			session.setAttribute("last_name", potentialUser.getLast_name() );
+			return "redirect:/dashboard";
+		}
+		else {
 			model.addAttribute("newUser", new User());
 			return "index.jsp";
 		}
