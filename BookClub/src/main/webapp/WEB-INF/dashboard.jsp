@@ -39,6 +39,12 @@
 		</tr>
 	</c:forEach>
 </table>
+<div><h4>testing likes</h4>
+<p><c:forEach var="like" items="${user.bookLikes}">
+<c:out value="${like.title}"/>
+</c:forEach></p>
+
+</div>
 <hr><br>
 <a class="btn" style="border:solid 2px black" href="/book/create">Create Book?</a>
 <hr><br>

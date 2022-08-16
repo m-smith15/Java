@@ -1,6 +1,7 @@
 package com.shrimpco.bookclub.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -32,9 +35,21 @@ public class Book {
 	@Size(min=2, max=50)
 	private String author;
 	
+	@NotEmpty(message="Description must not be blank!")
+	@Size(min=2, max=250)
+	private String description;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
+	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "likes", 
+        joinColumns = @JoinColumn(name = "book_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 	
 	@Column(updatable=false)
 	private Date createdAt;
@@ -104,6 +119,22 @@ public class Book {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 	
     

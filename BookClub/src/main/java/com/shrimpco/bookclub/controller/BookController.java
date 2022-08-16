@@ -33,6 +33,10 @@ public class BookController {
 							HttpSession session) {
 		List<Book> listOBooks = bookService.allBooks();
 		model.addAttribute("books", listOBooks);
+		
+		String email = (String) session.getAttribute("email");
+		User currentUser = userService.singleUserByLogin(email);
+		model.addAttribute("user", currentUser);
 		return "dashboard.jsp";
 	}
 	
@@ -50,7 +54,7 @@ public class BookController {
 		if(potentialBook != null) {
 			return "redirect:/dashboard";
 		}else {
-		return "createbook.jsp";
+			return "createbook.jsp";
 		}
 	}
 	
@@ -89,8 +93,7 @@ public class BookController {
 			return "redirect:/dashboard";
 		} else {
 			return "editbook.jsp";
-		}
-		
+		}	
 	}
 									
 

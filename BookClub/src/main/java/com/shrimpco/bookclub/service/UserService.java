@@ -22,9 +22,6 @@ public class UserService {
 	//create, find all, find 1, delete
 	
 	public void createUser(User user) {
-		//when move to service move hash pw to register too
-		String hashedPassword = BCrypt.hashpw( user.getPassword(), BCrypt.gensalt() );
-		user.setPassword(hashedPassword);
 		userRepository.save(user);
 	}
 	
@@ -77,6 +74,8 @@ public class UserService {
 			return null;
 		} 
 		else {
+			String hashedPassword = BCrypt.hashpw( newUser.getPassword(), BCrypt.gensalt() );
+			newUser.setPassword(hashedPassword);
 			return newUser;
 		}
 	}

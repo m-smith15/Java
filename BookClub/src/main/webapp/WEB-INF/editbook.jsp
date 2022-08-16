@@ -32,6 +32,10 @@
 		<form:input path="author" type="text" value="${book.author}" />
 		<form:errors path="author" />
 		<br>
+		<form:label path="description">description:</form:label>
+		<form:textarea path="description" value="${book.description }" />
+		<form:errors path="description" />
+		<br>
 		<form:input type="hidden" path="user" value="${book.getUser().getId()}"/>
 		<button type="submit">Edit!</button>
 	</form:form>

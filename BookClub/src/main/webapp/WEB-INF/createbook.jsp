@@ -22,6 +22,7 @@
 <body style="background-color: steelblue;">
 	<h1>So, <c:out value="${first_name}"/> <c:out value="${last_name}"/> with an ID of <c:out value="${id}"/> wants to create a book eh?</h1>
 
+<div class="container">
 	<form:form action="/book/create/new" method="post" modelAttribute="book">
 		<form:label path="title">title:</form:label>
 		<form:input path="title" type="text" />
@@ -31,9 +32,13 @@
 		<form:input path="author" type="text" />
 		<form:errors path="author" />
 		<br>
+		<form:label path="description">description:</form:label>
+		<form:textarea path="description" />
+		<form:errors path="description" />
 		 <form:input type="hidden" path="user" value="${id}"/>
 		<button type="submit">Create!</button>
 	</form:form>
+</div>
 
 	<hr>
 	<br>

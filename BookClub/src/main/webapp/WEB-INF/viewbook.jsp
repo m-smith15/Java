@@ -24,16 +24,20 @@
 		Take a closer look at
 		<c:out value="${book.title}" />
 	</h1>
-
+	<div class="container">
 	<h2>${book.user.first_name} ${book.user.last_name} read ${book.title} by ${book.author}</h2>
 
-	<p>here is where I would put a description...IF I ADDED ONE</p>
-
-	<p>User ID -<c:out value="${user.id}"/></p>
-	<p>Book User ID -<c:out value="${book.user.id}"/></p>
+	<p><c:out value="${book.description}"></c:out></p>
+	<form action="/book/like/${id}" method="post">
+		<button type="submit">Like book?</button>
+	</form>
+	
+	<p>(Debug) User ID -<c:out value="${user.id}"/></p>
+	<p>(Debug) Book User ID -<c:out value="${book.user.id}"/></p>
 	<c:if test="${user.id == book.user.id}">
 		<a class="btn" style="border: solid 2px black" href="/book/edit/${id}">Edit Entry?</a>
 	</c:if>
+	</div>
 	<hr>
 	<br>
 	<a class="btn" style="border: solid 2px black" href="/dashboard">Return
