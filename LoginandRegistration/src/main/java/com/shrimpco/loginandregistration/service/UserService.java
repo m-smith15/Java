@@ -3,6 +3,8 @@ package com.shrimpco.loginandregistration.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,6 @@ public class UserService {
 	
 	public void createUser(User user) {
 		//when move to service move hash pw to register too
-		String hashedPassword = BCrypt.hashpw( user.getPassword(), BCrypt.gensalt() );
-		user.setPassword(hashedPassword);
 		userRepository.save(user);
 	}
 	
@@ -76,6 +76,8 @@ public class UserService {
 			return null;
 		} 
 		else {
+			String hashedPassword = BCrypt.hashpw( newUser.getPassword(), BCrypt.gensalt() );
+			newUser.setPassword(hashedPassword);
 			return newUser;
 		}
 	}
@@ -101,6 +103,14 @@ public class UserService {
 			System.out.println("unsuccessful login - email");
 			bindingResult.rejectValue("email", "Incorrect", "email not correct!");
 			return null;
+		}
+	}
+	public boolean validateSession(HttpSession session) {
+		if(session.getAttribute("email") == null){
+			System.out.println("invalid session, redirect to login");
+			return false;
+		} else {
+			return true;
 		}
 	}
 }
