@@ -31,19 +31,30 @@ public class BookController {
 	@RequestMapping( value="/dashboard", method=RequestMethod.GET)
 	private String dashboard(Model model,
 							HttpSession session) {
-		List<Book> listOBooks = bookService.allBooks();
-		model.addAttribute("books", listOBooks);
-		
-		String email = (String) session.getAttribute("email");
-		User currentUser = userService.singleUserByLogin(email);
-		model.addAttribute("user", currentUser);
-		return "dashboard.jsp";
+		if(userService.validateSession(session) == true) {
+			List<Book> listOBooks = bookService.allBooks();
+			model.addAttribute("books", listOBooks);
+			
+			String email = (String) session.getAttribute("email");
+			User currentUser = userService.singleUserByLogin(email);
+			model.addAttribute("user", currentUser);
+			return "dashboard.jsp";
+		}
+		else {
+			return "redirect:/logout";
+		}
 	}
 	
 	@RequestMapping( value="/book/create", method=RequestMethod.GET)
-	private String CreateABook(Model model) {
-		model.addAttribute("book", new Book());
-		return "createbook.jsp";
+	private String CreateABook(Model model,
+								HttpSession session) {
+		if(userService.validateSession(session) == true) {
+			model.addAttribute("book", new Book());
+			return "createbook.jsp";
+		}
+		else {
+			return "redirect:/logout";
+		}
 	}
 	
 	@RequestMapping( value="/book/create/new", method=RequestMethod.POST)
@@ -62,23 +73,32 @@ public class BookController {
 	private String viewBook(@PathVariable("id") Long id,
 							Model model,
 							HttpSession session) {
-		String email = (String) session.getAttribute("email");
-		User currentUser = userService.singleUserByLogin(email);
-//		System.out.println(currentUser.getId());
-		model.addAttribute("book", bookService.singleBook(id));
-		model.addAttribute("user", currentUser);
-	
+		if(userService.validateSession(session) == true) {
+			String email = (String) session.getAttribute("email");
+			User currentUser = userService.singleUserByLogin(email);
+	//		System.out.println(currentUser.getId());
+			model.addAttribute("book", bookService.singleBook(id));
+			model.addAttribute("user", currentUser);
 		
-		return "viewbook.jsp";
+			return "viewbook.jsp";
+		}
+		else {
+			return "redirect:/logout";
+		}
 	}
 	
 	@RequestMapping( value="/book/edit/{id}", method=RequestMethod.GET)
 	private String editBook(@PathVariable("id") Long id,
 							Model model,
 							HttpSession session) {
-		model.addAttribute("book", bookService.singleBook(id));
-		
-		return "editbook.jsp";
+		if(userService.validateSession(session) == true) {
+			model.addAttribute("book", bookService.singleBook(id));
+			
+			return "editbook.jsp";
+		}
+		else {
+			return "redirect:/logout";
+		}
 	}
 	
 	@RequestMapping( value="/book/edit/{id}", method=RequestMethod.PUT)

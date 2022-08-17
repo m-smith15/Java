@@ -3,6 +3,8 @@ package com.shrimpco.bookclub.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,6 +103,14 @@ public class UserService {
 			System.out.println("unsuccessful login - email");
 			bindingResult.rejectValue("email", "Incorrect", "email not correct!");
 			return null;
+		}
+	}
+	public boolean validateSession(HttpSession session) {
+		if(session.getAttribute("email") == null){
+			System.out.println("invalid session, redirect to login");
+			return false;
+		} else {
+			return true;
 		}
 	}
 }
