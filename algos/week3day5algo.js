@@ -358,7 +358,6 @@ isFull(node = this.root){
     if(!node.left && node.right || node.left && !node.right){
         return false;
     }
-
     let leftBool = this.isFull(node.left)
     let rightBool = this.isFull(node.right)
 
@@ -369,16 +368,64 @@ isFull(node = this.root){
 }
 
 /* remove node from tee, return t or f */ 
-removeVal(val){
-    return true;
+// removeVal(val, current = this.root){
+//     if(this.isEmpty()){
+//         console.log("this returned false");
+//         return false;
+//     }
+//     console.log(current);
+//     let leftcheck = this.removeVal(val, current.left);
+//     if(!leftcheck){
+//         if(current.data == val){
+//             console.log("val found at" + current.data);
+//             return true;
+//         }
+//     }
+//     let rightcheck = this.removeVal(val, current.right);
+//     if(!rightcheck){
+//         if(current.data == val){
+//             console.log("val found at" + current.data);
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+//searchVal, current = this.root
+
+removeVal(val, current = this.root, lag = null){
+if(this.isEmpty()){
+    return false;
+}
+if(val > current.data && !current.right){
+    return false;
+} 
+if(val > current.data && current.right){
+    console.log("move right " + lag)
+    return this.containsRecursive(val,current.right, lag = current)
+}
+if(val < current.data && !current.left){
+    return false;
+}
+if(val < current.data && current.left){
+    console.log("move left " + lag)
+    return this.containsRecursive(val,current.left, lag = current)
+}
+if(val === current.data){
+    current.data = lag;
+    return "abc";
+}
+    return false;
 }
 
 findDuplicates() {
-    return false;
+    
 }
 
 //end
 }
+
+
 var tree = new BinarySearchTree
 tree.insert(50);
 tree.insert(25);
@@ -402,8 +449,9 @@ tree.display();
 // tree.removeEnd(13);
 // tree.display();
 
-console.log("-------height-----------")
-console.log(tree.height());
+console.log("-------remove Val-----------")
+console.log(tree.removeVal(90));
+tree.display();
 
-console.log("-------isFull-----------")
-console.log(tree.isFull());
+// console.log("-------find duplicates-------")
+// console.log(tree.isFull());
