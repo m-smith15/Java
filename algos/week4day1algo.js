@@ -92,3 +92,6 @@ lookAtThisStack.push(5);
 lookAtThisStack.isEmpty();
 lookAtThisStack.display();
 console.log(lookAtThisStack.peekAtValue(3));
+
+
+console.log(test());
